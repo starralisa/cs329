@@ -74,7 +74,7 @@ def most_similar(Y: Dict[str, Dict[str, float]], x: Dict[str, float]) -> str:
 if __name__ == '__main__':
     # download aesop's fables
     aesop_link = 'https://raw.githubusercontent.com/emory-courses/computational-linguistics/master/res/vsm/aesopfables.json'
-    aesop_file = 'res/vsm/aesopfables.json'
+    aesop_file = 'quiz/res/vsm/aesopfables.json'
     # download(aesop_link, aesop_file)
 
     # read json
@@ -110,7 +110,7 @@ if __name__ == '__main__':
 
     # download alternative falbles
     link = 'https://raw.githubusercontent.com/emory-courses/computational-linguistics/master/res/vsm/aesopfables-alt.json'
-    file = 'res/vsm/aesopfables-alt.json'
+    file = 'quiz/res/vsm/aesopfables-alt.json'
     # download(link, file)
 
     fables_alt = json.load(open(file))

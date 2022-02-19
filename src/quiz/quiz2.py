@@ -16,7 +16,7 @@
 import json
 from typing import Dict, Any, List, Tuple
 from collections import Counter
-from src.vector_space_models import tf_idfs, most_similar, term_frequencies, document_frequencies
+from src.vector_space_models import tf_idfs, most_similar, term_frequencies, document_frequencies, euclidean
 import math
 
 FM = {
@@ -131,7 +131,8 @@ def sublinear(fables) -> Dict[str,Dict[str,int]]:
     #Using a for loop in the main method with variable i in range (0, 200), then alpha = 1/x, where x is any number and allows for get float values of alpha
     #I tested different value of alpha. The general range of correct matches of similar documents was 13 to 21 out of 37
     #For example, 0.85 yeilded 21 correct documents. Overall, this is better than using uclidean and tf_idfs, but worse than using cosine and tf_idfs
-def normalize(fables, alpha: int) -> Dict[str,Dict[str,int]]:
+def normalize(fables) -> Dict[str,Dict[str,int]]:
+    alpha = 0.2
     tfs = term_frequencies(fables)
     dfs = document_frequencies(fables)
     out = dict()
@@ -177,7 +178,7 @@ def vectorize(documents: List[Dict[str, Any]]) -> Dict[str, Dict[str, int]]:
 def similar_documents(X: Dict[str, Dict[str, float]], Y: Dict[str, Dict[str, float]]) -> Dict[str, str]:
             #X is Dict[titles altfables, Dict[terms in altfables, tf_idfs]]
             #Y is Dict[titles fables, Dict[terms in fables, tf_idfs]]
-    return {k: most_similar1(Y, x) for k, x in X.items()}
+    return {k: most_similar1(Y, x) for k, x in X.items()} #use the method which compares cosine similarity
   #similar_documents takes the outputs of vectorize/tf_idfs of fables and altfables
   #Input to most_similar is Dict[titles fables, Dict[terms in fables, tf_idfs]], Dict[terms in altfables,tf_idfs]
   #returns the fable of all fables that is most similar to the alt fable
@@ -208,8 +209,8 @@ def most_similar(Y: Dict[str, Dict[str, float]], x: Dict[str, float]) -> str:
 
 
 if __name__ == '__main__':
-    fables = json.load(open('../res/vsm/aesopfables.json'))
-    fables_alt = json.load(open('../res/vsm/aesopfables-alt.json'))
+    fables = json.load(open('res/vsm/aesopfables.json'))
+    fables_alt = json.load(open('res/vsm/aesopfables-alt.json'))
 
     v_fables = vectorize(fables)
     v_fables_alt = vectorize(fables_alt)
