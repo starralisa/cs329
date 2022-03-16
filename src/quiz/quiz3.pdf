@@ -1,0 +1,36 @@
+CS329 Quiz3 PDF
+Alisa Starr
+
+
+I used the dictionaries from class to begin my code. There was a unigram model which takes the current word, bigram models which predicts the current part of speech
+based on the previous POS, bigram to predict current POS based on the context of the previous word, and a bigram model which uses the next word. The first models 
+that I added were all trigram models which used the context of: current word and previous POS; current word and previous word; and current word and next word. The 
+next dictionaries I added were quadrigram models which took: previous word, current word, and next word; and previous POS, current word, and next word. 
+
+Just like in class, I trained the data with the development data and used a sparse grid search to determine weights for each of the different dictionaries. This 
+grid search checked 0.1, 0.5, and 1.0 for all dictionaries and only used the unigram, bigram, and trigram dictionaries, because I did not yet add the qudrigram 
+dictionaries. A sparse grid search does not yield the highest possible result(s), but it gives a general sense of what range of values to focus on for determining 
+good weight values. A more fine grid search would yield better results, but would take too much time and memory (my sparse grid search took about 2 hours and about 
+60% of my laptop battery).
+
+I now decided to add the quadrigram models. My new strategy to find the weights was to hold current weights as constants except for the weight of one of the 
+dictionaries, and then I would use a fine grid (0.0 to 2.0 with intervals of about 0.05) to extract the best weight for that specific dictionary. I did this for 
+every dictionary. This is not the best strategy for finding the best weight, but it was fast and still got a satisfactory score. In the end, my final highest 
+training result score on the development data was 95.1%. My concern is that, because of how fine tuned the weights were, it is likely that the weights were too 
+fine tuned to the development data specifically and would not perform as well on other data. Nevertheless, within the time period, I felt that this was 
+still an effective and efficient method. 
+
+To summarize the models/dictionaries and corresponding weights:
+- Unigram: Already given
+    - Current word, weight = 0.75
+- Bigram: Already given
+    - Previous POS, weight = 0.275
+    - Previous word, weight = 0.5
+    - Next word, weight = 0.7
+- Trigram: I made
+    - Current word and previous POS, weight = 1.0
+    - Current word and previous word, weight = 0.95
+    - Current word and next word, weight = 0.65
+- Quadrigram: I made
+    - Previous word, current word, next word weight = 0.55
+    - Previous POS, current word, next word, weight = 0.8
